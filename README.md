@@ -3,8 +3,7 @@
 
 ## 🎮 GIT FLOW
 
-   * 개인 이름 브랜치를 만들어서 각자 개발사항을 추가 
-   * master branch 에 올리기 전에 코드 리뷰하고 특이사항 없을 경우 PR Merge
+   * 개인 이름 파일 만들어서 각자 개발사항을 추가 
 
 ## 🎮 GIT COMMIT MESSAGE CONVENTION
    * [ADD] , [REFACTOR] , [DELETE] , [HOTFIX]
