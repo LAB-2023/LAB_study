@@ -16,3 +16,6 @@
    * 질문이 해결되어도 이슈 닫지 않기
    * ex) 제목 -  동혁)2022.11.01 기본키 매핑 효율
    * ex) 내용 - PA 기본편에서 기본키 매핑 중 @GeneratedValue(strategy = GenerationType.~)를 사용할 때 실제로 PK를 위한 GenerationType 을 어떤것을 사용하는지 궁금합니다.
+
+마크 다운 작성 예시 : 
+[Example - JPA](https://github.com/LAB-2023/LAB_study/blob/main/%EA%B0%9C%EC%9D%B8%20%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC%20%EC%98%88%EC%8B%9C(%EC%B2%A0%EC%9B%85)/jpa/purejpa.md) 
