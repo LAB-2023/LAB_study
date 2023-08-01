@@ -96,14 +96,51 @@
         
         ControllerV3는 ModelView를 반환하므로 그대로 ModelView를 반환하면 된다.
 
-        생성자
+
+        frontController에
+        매핑 정보의 값이 ControllerV3 , ControllerV4 같은 인터페이스에서 아무 값이나 받을 수 있는 Object 로 변경되었다.
+        private final Map<String, Object> handlerMappingMap = new HashMap<>();
+            
+        생성자 핸들러 매핑과 어댑터를 초기화(등록)한다.
             public FrontControllerServletV5(){
                 initHandlerMappingMap();
                 initHandlerAdapters();
             }
-            
-        매핑 정보의 값이 ControllerV3 , ControllerV4 같은 인터페이스에서 아무 값이나 받을 수 있는 Object 로 변경되었다.
-            private final Map<String, Object> handlerMappingMap = new HashMap<>();
+
+         V3, V4 등록
+                private void initHandlerAdapters() {
+                        handlerAdapters.add(new ControllerV3HandlerAdapter());
+                        handlerAdapters.add(new ControllerV4HandlerAdapter());
+                }
+
+          컨트롤러(Controller) 핸들러(Handler)
+          이전에는 컨트롤러를 직접 매핑해서 사용했다. 그런데 이제는 어댑터를 사용하기 때문에, 컨트롤러 뿐만
+          아니라 어댑터가 지원하기만 하면, 어떤 것이라도 URL에 매핑해서 사용할 수 있다. 그래서 이름을
+          컨트롤러에서 더 넒은 범위의 핸들러로 변경했다
+
+          handler 어탭터 조회
+          handler 를 처리할 수 있는 어댑터를 adapter.supports(handler) 를 통해서 찾는다.
+          handler가 ControllerV3 인터페이스를 구현했다면, ControllerV3HandlerAdapter 객체가
+          반환된다.
+            for (MyHandlerAdapter adapter : handlerAdapters) {
+                if(adapter.supports(handler)){
+                        return adapter;
+                    }
+                }
 
 
+        어댑터 호출
+        ModelView mv = adapter.handle(request, response, handler);
+        어댑터의 handle(request, response, handler) 메서드를 통해 실제 어댑터가 호출된다.
+        어댑터는 handler(컨트롤러)를 호출하고 그 결과를 어댑터에 맞추어 반환한다.
+
+        컨트롤러 V4
+        어댑터 변환(어댑터가 필요한 이유)
+                ModelView mv = new ModelView(viewName);
+                mv.setModel(model);
+                return mv;
+                
+                위의 ControllerV4는 뷰의 이름을 반환한다. 
+                하지만 어댑터는 뷰의 이름이 아니라 ModelView 를 만들어서 반환해야 한다.
+                ControllerV4 는 뷰의 이름을 반환했지만, 어댑터는 이것을 ModelView로 만들어서 형식을 맞추어 반환한다.
         
